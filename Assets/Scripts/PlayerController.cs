@@ -5,7 +5,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    private new Rigidbody2D rigidbody;
+    Rigidbody2D rigidbody;
     public TMP_Text collectedText;
     public static int collectedAmount = 0;
     public GameObject bulletPrefab;
@@ -33,7 +33,13 @@ public class PlayerController : MonoBehaviour
         {
             Shoot(shootHorizontal, shootVertical);
             lastFire = Time.time;
+
+
+
+
         }
+
+
 
         rigidbody.velocity = new Vector3(horizontal * speed, vertical * speed, 0);
         collectedText.text = "Items Collected: " + collectedAmount;
@@ -42,7 +48,7 @@ public class PlayerController : MonoBehaviour
     void Shoot(float x, float y)
     {
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody2D>().gravityScale = 0;
+        bullet.AddComponent<Rigidbody2D>().gravityScale = 0;
         bullet.GetComponent<Rigidbody2D>().velocity = new Vector3(
             (x < 0) ? Mathf.Floor(x) * bulletSpeed : Mathf.Ceil(x) * bulletSpeed,
             (y < 0) ? Mathf.Floor(y) * bulletSpeed : Mathf.Ceil(y) * bulletSpeed, 0);
