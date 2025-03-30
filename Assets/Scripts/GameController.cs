@@ -14,6 +14,11 @@ public class GameController : MonoBehaviour
     private static float moveSpeed = 5f;
     private static float fireRate = 0.5f;
     private static float bulletSize = 0.5f;
+
+    private bool shoesCollected = false;
+    private bool ballPumpCollected = false;
+    public List<string> collectedNames = new List<string>();
+
     public static float Health { get => health; set => health = value; }
     public static int MaxHealth { get => maxHealth; set => maxHealth = value; }
     public static float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
@@ -59,6 +64,26 @@ public class GameController : MonoBehaviour
     public static void BulletSizeChange(float size)
     {
         bulletSize += size;
+    }
+    public void UpdateCollectedItems(CollectionController item)
+    {
+        collectedNames.Add(item.item.name);
+        foreach (string i in collectedNames)
+        {
+            switch (i)
+            {
+                case "Shoes":
+                    shoesCollected = true;
+                    break;
+                case "Ball Pump":
+                    ballPumpCollected = true;
+                    break;
+            }
+        }
+        if (shoesCollected && ballPumpCollected)
+        {
+            FireRateChange(0.25f);
+        }
     }
     private void KillPLayer()
     {
